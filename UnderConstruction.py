@@ -145,19 +145,19 @@ TradingPC = Actor('tradingpc')
 TradingPC.pos = (Factory.x - 1600, Factory.y - 875)
 
 # MetalFactory specific sprites
-MetalFactory = Actor('metal_factory')
+MetalFactory = Actor('basic_factory')
 MetalFactory.pos = (WIDTH//2 + 500, HEIGHT//2 + 375)
 
-MetalFactory_UpWall = Actor('metal_factory_horizontal_wall')
+MetalFactory_UpWall = Actor('basic_factory_horizontal_wall')
 MetalFactory_UpWall.pos = (WIDTH//2 + 500, HEIGHT//2 - 337.5)
 
-MetalFactory_DownWall = Actor('metal_factory_horizontal_wall')
+MetalFactory_DownWall = Actor('basic_factory_horizontal_wall')
 MetalFactory_DownWall.pos = (WIDTH//2 + 500, HEIGHT//2 + 1087.5)
 
-MetalFactory_LeftWall = Actor('metal_factory_vertical_wall')
+MetalFactory_LeftWall = Actor('basic_factory_vertical_wall')
 MetalFactory_LeftWall.pos = (WIDTH//2 + 137.5, HEIGHT//2 + 375)
 
-MetalFactory_RightWall = Actor('metal_factory_vertical_wall')
+MetalFactory_RightWall = Actor('basic_factory_vertical_wall')
 MetalFactory_RightWall.pos = (WIDTH//2 + 862.5, HEIGHT//2 + 375)
 
 MetalFactory_Conveyor = Actor('metal_factory_conveyor')
@@ -185,6 +185,39 @@ MetalFactory_BrickFurnace.angle = 180 # Rotates the sprite 180 degrees
 
 MetalFactory_buyUI_text = 'Metal Factory'
 
+# WoodFactory specific sprites
+WoodFactory = Actor('basic_factory')
+WoodFactory.pos = (WIDTH//2 - 550, HEIGHT//2 + 375)
+
+WoodFactory_UpWall = Actor('basic_factory_horizontal_wall')
+WoodFactory_UpWall.pos = (WoodFactory.x, WoodFactory.y - 712.5)
+
+WoodFactory_DownWall = Actor('basic_factory_horizontal_wall')
+WoodFactory_DownWall.pos = (WoodFactory.x, WoodFactory.y + 712.5)
+
+WoodFactory_LeftWall = Actor('basic_factory_vertical_wall')
+WoodFactory_LeftWall.pos = (WoodFactory.x - 362.5, WoodFactory.y)
+
+WoodFactory_RightWall = Actor('basic_factory_vertical_wall')
+WoodFactory_RightWall.pos = (WoodFactory.x + 362.5, WoodFactory.y)
+
+WoodFactory_Conveyor = Actor('straight_conveyor')
+WoodFactory_Conveyor.pos = (WIDTH//2 - 25, HEIGHT//2 + 337.5)
+
+WoodFactory_buyUI = Actor('buyui')
+WoodFactory_buyUI.pos = (WoodFactory.x, WoodFactory.y)
+
+WoodFactory_buyUI_buybtn = Actor('buyui_buybtn')
+WoodFactory_buyUI_buybtn.pos = (WoodFactory_buyUI.x, WoodFactory_buyUI.y + 118.75)
+
+WoodFactory_BeamSaw = Actor('beam_saw')
+WoodFactory_BeamSaw.pos = (WoodFactory.x, WoodFactory.y + 412.5)
+
+WoodFactory_PlankSaw = Actor('plank_saw')
+WoodFactory_PlankSaw.pos = (WoodFactory.x, WoodFactory.y - 587.5)
+
+WoodFactory_buyUI_text = 'Wood Factory'
+
 # Dictionary for seeing if a building should produce materials or not
 MetalFactory_Producers = {MetalFactory_IronSmelter:False, MetalFactory_CopperSmelter:False, MetalFactory_SteelSmelter:False, MetalFactory_BrickFurnace:False}
 
@@ -192,14 +225,23 @@ MetalFactory_Producers = {MetalFactory_IronSmelter:False, MetalFactory_CopperSme
 # Stage 0 = Nothing built, Stage 1 = MetalFactory, Stage 2 = Conveyor, Stage 3 = Iron Smelter, Stage 4 = Copper Smelter, Stage 5 = Steel Smelter, Stage 6 = Brick Furnace
 MetalFactory_Stage = 0
 
+# Int for setting the WoodFactory_buyUI to correct state
+# Stage 0 = Nothing built, Stage 1 = WoodFactory, Stage 2 = Conveyor
+WoodFactory_Stage = 0
+
 # List of sprites in factory map to make it easier to move around
 Factory_Sprites = [Factory, TradingPC, CollisionMapUp, CollisionMapDown, CollisionMapLeft, CollisionMapRight, 
                    MetalFactory, MetalFactory_UpWall, MetalFactory_DownWall, MetalFactory_LeftWall, MetalFactory_RightWall, MetalFactory_buyUI, MetalFactory_buyUI_buybtn, MetalFactory_Conveyor,
-                   MetalFactory_IronSmelter, MetalFactory_CopperSmelter, MetalFactory_SteelSmelter, MetalFactory_BrickFurnace]
+                   MetalFactory_IronSmelter, MetalFactory_CopperSmelter, MetalFactory_SteelSmelter, MetalFactory_BrickFurnace,
+                   WoodFactory, WoodFactory_UpWall, WoodFactory_DownWall, WoodFactory_LeftWall, WoodFactory_RightWall, WoodFactory_buyUI, WoodFactory_buyUI_buybtn, WoodFactory_Conveyor,
+                   WoodFactory_BeamSaw, WoodFactory_PlankSaw]
 # List of sprites in factory map that should be rendered and bool for if they should be rendered or not, sets them in order so things go above or below the player sprite as they should
 Factory_Sprites_Render = {Factory:True, TradingPC:True, MetalFactory:False, MetalFactory_UpWall:False, MetalFactory_DownWall:False, MetalFactory_LeftWall:False, 
                           MetalFactory_RightWall:False, MetalFactory_buyUI:True, MetalFactory_IronSmelter:False, MetalFactory_CopperSmelter:False, MetalFactory_SteelSmelter:False, 
-                          MetalFactory_BrickFurnace:False, Player:True, MetalFactory_Conveyor:False}
+                          MetalFactory_BrickFurnace:False,
+                          WoodFactory:False, WoodFactory_UpWall:False, WoodFactory_DownWall:False, WoodFactory_LeftWall:False, WoodFactory_RightWall:False, WoodFactory_buyUI:True,
+                          WoodFactory_BeamSaw:False, WoodFactory_PlankSaw:False,
+                          Player:True, MetalFactory_Conveyor:False, WoodFactory_Conveyor:False}
 
 # City Sprites
 City = Actor('city')
@@ -220,6 +262,13 @@ def draw():
                 #screen.draw.text() # Third row resource
                 #screen.draw.text() # Fourth row resource
                 screen.draw.text('Buy', center=(MetalFactory_buyUI_buybtn.x, MetalFactory_buyUI_buybtn.y), fontsize=40) # Buy button
+            if sprite == WoodFactory_buyUI and Factory_Sprites_Render[WoodFactory_buyUI]:
+                screen.draw.text(WoodFactory_buyUI_text, center=(WoodFactory_buyUI_buybtn.x, WoodFactory_buyUI_buybtn.y - 237.5), fontsize=40)
+                #screen.draw.text() # First row resource
+                #screen.draw.text() # Second row resource
+                #screen.draw.text() # Third row resource
+                #screen.draw.text() # Fourth row resource
+                screen.draw.text('Buy', center=(WoodFactory_buyUI_buybtn.x, WoodFactory_buyUI_buybtn.y), fontsize=40) # Buy button
     else:
         # Draw city area
         City.draw()
@@ -372,6 +421,8 @@ def on_mouse_down(pos):
     # If pressed on the buy button on MetalFactory_buyUI, call the function to buy the correct building/item
     if MetalFactory_Stage < 6 and MetalFactory_buyUI_buybtn.collidepoint(pos):
         MetalFactory_build()
+    elif WoodFactory_Stage < 4 and WoodFactory_buyUI_buybtn.collidepoint(pos):
+        WoodFactory_build()
     # If pressed on TradingPC sprite then call the function to open tradeUI
     if TradingPC.collidepoint(pos):
         tradeui_open()
@@ -435,6 +486,33 @@ def MetalFactory_build():
         Factory_Sprites_Render[MetalFactory_BrickFurnace] = True
         MetalFactory_Producers[MetalFactory_BrickFurnace] = True
         Factory_Sprites_Render[MetalFactory_buyUI] = False
+
+# Buys buildings / items, enables the bought buildings / items and makes sure they are rendered / drawn
+def WoodFactory_build():
+    global WoodFactory_Stage
+    global WoodFactory_buyUI_text
+    WoodFactory_Stage += 1
+    if WoodFactory_Stage == 1:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[WoodFactory] = True
+        Factory_Sprites_Render[WoodFactory_UpWall] = True
+        Factory_Sprites_Render[WoodFactory_DownWall] = True
+        Factory_Sprites_Render[WoodFactory_LeftWall] = True
+        Factory_Sprites_Render[WoodFactory_RightWall] = True
+        WoodFactory_buyUI_text = 'Conveyor'
+    elif WoodFactory_Stage == 2:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[WoodFactory_Conveyor] = True
+        WoodFactory_buyUI_text = 'Beam Saw'
+    elif WoodFactory_Stage == 3:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[WoodFactory_BeamSaw] = True
+        WoodFactory_buyUI_text = 'Plank Saw'
+    elif WoodFactory_Stage == 4:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[WoodFactory_PlankSaw] = True
+        Factory_Sprites_Render[WoodFactory_buyUI] = False
+
 
 # Makes the tradeUI render when opened
 def tradeui_open():

@@ -27,9 +27,9 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.0544998"
-     inkscape:cx="757.23108"
-     inkscape:cy="348.03232"
+     inkscape:zoom="0.37282198"
+     inkscape:cx="1980.8381"
+     inkscape:cy="957.56157"
      inkscape:window-width="2560"
      inkscape:window-height="1377"
      inkscape:window-x="1912"
@@ -58,7 +58,7 @@
        y="-681.30219"
        transform="rotate(90)" />
     <rect
-       style="fill:#550000;stroke-width:0.061553"
+       style="fill:#808080;stroke-width:0.061553"
        id="rect611-7"
        width="66.145851"
        height="33.072926"
@@ -79,7 +79,7 @@
        x="277.81256"
        y="0" />
     <rect
-       style="fill:#00ff00;stroke-width:0.060893"
+       style="fill:#808080;stroke-width:0.060893"
        id="rect277-9"
        width="211.6667"
        height="396.87506"
