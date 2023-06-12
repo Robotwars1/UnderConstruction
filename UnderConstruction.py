@@ -220,6 +220,7 @@ WoodFactory_buyUI_text = 'Wood Factory'
 
 # Dictionary for seeing if a building should produce materials or not
 MetalFactory_Producers = {MetalFactory_IronSmelter:False, MetalFactory_CopperSmelter:False, MetalFactory_SteelSmelter:False, MetalFactory_BrickFurnace:False}
+WoodFactory_Producers = {WoodFactory_BeamSaw:False, WoodFactory_PlankSaw:False}
 
 # Int for setting the MetalFactory_buyUI to correct state
 # Stage 0 = Nothing built, Stage 1 = MetalFactory, Stage 2 = Conveyor, Stage 3 = Iron Smelter, Stage 4 = Copper Smelter, Stage 5 = Steel Smelter, Stage 6 = Brick Furnace
@@ -507,12 +508,13 @@ def WoodFactory_build():
     elif WoodFactory_Stage == 3:
         # Sets the bought building to be drawn
         Factory_Sprites_Render[WoodFactory_BeamSaw] = True
+        WoodFactory_Producers[WoodFactory_BeamSaw] = True
         WoodFactory_buyUI_text = 'Plank Saw'
     elif WoodFactory_Stage == 4:
         # Sets the bought building to be drawn
         Factory_Sprites_Render[WoodFactory_PlankSaw] = True
+        WoodFactory_Producers[WoodFactory_PlankSaw] = True
         Factory_Sprites_Render[WoodFactory_buyUI] = False
-
 
 # Makes the tradeUI render when opened
 def tradeui_open():
@@ -632,11 +634,26 @@ def metalfactory_resource_produce():
                 resources['Clay'] -= 1
                 resources['Brick'] += 1
 
+# Function that consumes and produces correct resources
+def woodfactory_resource_produce():
+    global resources
+    for producer in WoodFactory_Producers:
+        if WoodFactory_Producers[producer]: # If the producer is True, eg meant to produce material
+            if producer == WoodFactory_BeamSaw and resources['Log'] > 1:
+                resources['Log'] -= 1
+                resources['Wood_Beam'] += 2
+            elif producer == WoodFactory_PlankSaw and resources['Wood_Beam'] > 1:
+                resources['Wood_Beam'] -= 1
+                resources['Wood_Plank'] += 4
+
 # Schedules the resource_buy function to be called every second
 clock.schedule_interval(resource_buy_per_second, 1)
 
 # Schedules the metalfactory_resource_production to be called every second
 clock.schedule_interval(metalfactory_resource_produce, 1)
+
+# Schedules the woodfactory_resource_produce to be called every second
+clock.schedule_interval(woodfactory_resoruce_produce, 1)
 
 # Runs the game
 pgzrun.go()
