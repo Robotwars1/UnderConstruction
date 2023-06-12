@@ -653,7 +653,7 @@ clock.schedule_interval(resource_buy_per_second, 1)
 clock.schedule_interval(metalfactory_resource_produce, 1)
 
 # Schedules the woodfactory_resource_produce to be called every second
-clock.schedule_interval(woodfactory_resoruce_produce, 1)
+clock.schedule_interval(woodfactory_resource_produce, 1)
 
 # Runs the game
 pgzrun.go()
