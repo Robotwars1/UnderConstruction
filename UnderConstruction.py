@@ -218,6 +218,39 @@ WoodFactory_PlankSaw.pos = (WoodFactory.x, WoodFactory.y - 587.5)
 
 WoodFactory_buyUI_text = 'Wood Factory'
 
+# FoodFactory specific sprites
+FoodFactory = Actor('food_factory')
+FoodFactory.pos = (WIDTH//2 - 1600, HEIGHT//2 + 250)
+
+FoodFactory_DownWall = Actor('basic_factory_horizontal_wall')
+FoodFactory_DownWall.pos = (FoodFactory.x, FoodFactory.y + 837.5)
+
+FoodFactory_LeftWall = Actor('food_factory_vertical_wall_without_door')
+FoodFactory_LeftWall.pos = (FoodFactory.x - 362.5, FoodFactory.y)
+
+FoodFactory_RightWall = Actor('food_factory_vertical_wall_with_door')
+FoodFactory_RightWall.pos = (FoodFactory.x + 362.5, FoodFactory.y)
+
+FoodFactory_Conveyor = Actor('straight_conveyor')
+FoodFactory_Conveyor.pos = (WIDTH//2 - 1075, HEIGHT//2 + 337.5)
+
+FoodFactory_buyUI = Actor('buyui')
+FoodFactory_buyUI.pos = (FoodFactory.x, FoodFactory.y)
+
+FoodFactory_buyUI_buybtn = Actor('buyui_buybtn')
+FoodFactory_buyUI_buybtn.pos = (FoodFactory_buyUI.x, FoodFactory_buyUI.y + 118.75)
+
+FoodFactory_FlourMill = Actor('flour_mill')
+FoodFactory_FlourMill.pos = (FoodFactory.x + 237.5, FoodFactory.y + 560)
+
+FoodFactory_BreadOven = Actor('bread_oven')
+FoodFactory_BreadOven.pos = (FoodFactory.x - 175, FoodFactory.y - 37.5)
+
+FoodFactory_MeatCutter = Actor('meat_cutter')
+FoodFactory_MeatCutter.pos = (FoodFactory.x + 150, FoodFactory.y - 550)
+
+FoodFactory_buyUI_text = 'Food Factory'
+
 # Dictionary for seeing if a building should produce materials or not
 MetalFactory_Producers = {MetalFactory_IronSmelter:False, MetalFactory_CopperSmelter:False, MetalFactory_SteelSmelter:False, MetalFactory_BrickFurnace:False}
 WoodFactory_Producers = {WoodFactory_BeamSaw:False, WoodFactory_PlankSaw:False}
@@ -227,22 +260,30 @@ WoodFactory_Producers = {WoodFactory_BeamSaw:False, WoodFactory_PlankSaw:False}
 MetalFactory_Stage = 0
 
 # Int for setting the WoodFactory_buyUI to correct state
-# Stage 0 = Nothing built, Stage 1 = WoodFactory, Stage 2 = Conveyor
+# Stage 0 = Nothing built, Stage 1 = WoodFactory, Stage 2 = Conveyor, Stage 3 = Beam Saw, Stage 4 = Plank Saw
 WoodFactory_Stage = 0
+
+# Int for setting the FoodFactory_buyUI to correct state
+# Stage 0 = Nothing built, Stage 1 = FoodFactory, Stage 2 = Conveyor, Stage 3 = Flour Mill, Stage 4 = Bread Oven, Stage 5 = Meat Cutter
+FoodFactory_Stage = 0
 
 # List of sprites in factory map to make it easier to move around
 Factory_Sprites = [Factory, TradingPC, CollisionMapUp, CollisionMapDown, CollisionMapLeft, CollisionMapRight, 
                    MetalFactory, MetalFactory_UpWall, MetalFactory_DownWall, MetalFactory_LeftWall, MetalFactory_RightWall, MetalFactory_buyUI, MetalFactory_buyUI_buybtn, MetalFactory_Conveyor,
                    MetalFactory_IronSmelter, MetalFactory_CopperSmelter, MetalFactory_SteelSmelter, MetalFactory_BrickFurnace,
                    WoodFactory, WoodFactory_UpWall, WoodFactory_DownWall, WoodFactory_LeftWall, WoodFactory_RightWall, WoodFactory_buyUI, WoodFactory_buyUI_buybtn, WoodFactory_Conveyor,
-                   WoodFactory_BeamSaw, WoodFactory_PlankSaw]
+                   WoodFactory_BeamSaw, WoodFactory_PlankSaw,
+                   FoodFactory, FoodFactory_DownWall, FoodFactory_LeftWall, FoodFactory_RightWall, FoodFactory_buyUI, FoodFactory_buyUI_buybtn, FoodFactory_Conveyor,
+                   FoodFactory_FlourMill, FoodFactory_BreadOven, FoodFactory_MeatCutter]
 # List of sprites in factory map that should be rendered and bool for if they should be rendered or not, sets them in order so things go above or below the player sprite as they should
 Factory_Sprites_Render = {Factory:True, TradingPC:True, MetalFactory:False, MetalFactory_UpWall:False, MetalFactory_DownWall:False, MetalFactory_LeftWall:False, 
                           MetalFactory_RightWall:False, MetalFactory_buyUI:True, MetalFactory_IronSmelter:False, MetalFactory_CopperSmelter:False, MetalFactory_SteelSmelter:False, 
                           MetalFactory_BrickFurnace:False,
                           WoodFactory:False, WoodFactory_UpWall:False, WoodFactory_DownWall:False, WoodFactory_LeftWall:False, WoodFactory_RightWall:False, WoodFactory_buyUI:True,
                           WoodFactory_BeamSaw:False, WoodFactory_PlankSaw:False,
-                          Player:True, MetalFactory_Conveyor:False, WoodFactory_Conveyor:False}
+                          FoodFactory:False, FoodFactory_DownWall:False, FoodFactory_LeftWall:False, FoodFactory_RightWall:False, FoodFactory_buyUI:True,
+                          FoodFactory_FlourMill:False, FoodFactory_BreadOven:False, FoodFactory_MeatCutter:False,
+                          Player:True, MetalFactory_Conveyor:False, WoodFactory_Conveyor:False, FoodFactory_Conveyor:False}
 
 # City Sprites
 City = Actor('city')
@@ -270,6 +311,13 @@ def draw():
                 #screen.draw.text() # Third row resource
                 #screen.draw.text() # Fourth row resource
                 screen.draw.text('Buy', center=(WoodFactory_buyUI_buybtn.x, WoodFactory_buyUI_buybtn.y), fontsize=40) # Buy button
+            if sprite == FoodFactory_buyUI and Factory_Sprites_Render[FoodFactory_buyUI]:
+                screen.draw.text(FoodFactory_buyUI_text, center=(FoodFactory_buyUI_buybtn.x, FoodFactory_buyUI_buybtn.y - 237.5), fontsize=40)
+                #screen.draw.text() # First row resource
+                #screen.draw.text() # Second row resource
+                #screen.draw.text() # Third row resource
+                #screen.draw.text() # Fourth row resource
+                screen.draw.text('Buy', center=(FoodFactory_buyUI_buybtn.x, FoodFactory_buyUI_buybtn.y), fontsize=40) # Buy button
     else:
         # Draw city area
         City.draw()
@@ -424,6 +472,8 @@ def on_mouse_down(pos):
         MetalFactory_build()
     elif WoodFactory_Stage < 4 and WoodFactory_buyUI_buybtn.collidepoint(pos):
         WoodFactory_build()
+    elif FoodFactory_Stage < 5 and FoodFactory_buyUI_buybtn.collidepoint(pos):
+        FoodFactory_build()
     # If pressed on TradingPC sprite then call the function to open tradeUI
     if TradingPC.collidepoint(pos):
         tradeui_open()
@@ -515,6 +565,34 @@ def WoodFactory_build():
         Factory_Sprites_Render[WoodFactory_PlankSaw] = True
         WoodFactory_Producers[WoodFactory_PlankSaw] = True
         Factory_Sprites_Render[WoodFactory_buyUI] = False
+
+def FoodFactory_build():
+    global FoodFactory_Stage
+    global FoodFactory_buyUI_text
+    FoodFactory_Stage += 1
+    if FoodFactory_Stage == 1:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[FoodFactory] = True
+        Factory_Sprites_Render[FoodFactory_DownWall] = True
+        Factory_Sprites_Render[FoodFactory_LeftWall] = True
+        Factory_Sprites_Render[FoodFactory_RightWall] = True
+        FoodFactory_buyUI_text = 'Conveyor'
+    elif FoodFactory_Stage == 2:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[FoodFactory_Conveyor] = True
+        FoodFactory_buyUI_text = 'Flour Mill'
+    elif FoodFactory_Stage == 3:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[FoodFactory_FlourMill] = True
+        FoodFactory_buyUI_text = 'Bread Oven'
+    elif FoodFactory_Stage == 4:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[FoodFactory_BreadOven] = True
+        FoodFactory_buyUI_text = 'Meat Cutter'
+    elif FoodFactory_Stage == 5:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[FoodFactory_MeatCutter] = True
+        Factory_Sprites_Render[FoodFactory_buyUI] = False
 
 # Makes the tradeUI render when opened
 def tradeui_open():
