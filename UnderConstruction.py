@@ -254,6 +254,7 @@ FoodFactory_buyUI_text = 'Food Factory'
 # Dictionary for seeing if a building should produce materials or not
 MetalFactory_Producers = {MetalFactory_IronSmelter:False, MetalFactory_CopperSmelter:False, MetalFactory_SteelSmelter:False, MetalFactory_BrickFurnace:False}
 WoodFactory_Producers = {WoodFactory_BeamSaw:False, WoodFactory_PlankSaw:False}
+FoodFactory_Producers = {FoodFactory_FlourMill:False, FoodFactory_BreadOven:False, FoodFactory_MeatCutter:False}
 
 # Int for setting the MetalFactory_buyUI to correct state
 # Stage 0 = Nothing built, Stage 1 = MetalFactory, Stage 2 = Conveyor, Stage 3 = Iron Smelter, Stage 4 = Copper Smelter, Stage 5 = Steel Smelter, Stage 6 = Brick Furnace
@@ -584,14 +585,17 @@ def FoodFactory_build():
     elif FoodFactory_Stage == 3:
         # Sets the bought building to be drawn
         Factory_Sprites_Render[FoodFactory_FlourMill] = True
+        FoodFactory_Producers[FoodFactory_FlourMill] = True
         FoodFactory_buyUI_text = 'Bread Oven'
     elif FoodFactory_Stage == 4:
         # Sets the bought building to be drawn
         Factory_Sprites_Render[FoodFactory_BreadOven] = True
+        FoodFactory_Producers[FoodFactory_BreadOven] = True
         FoodFactory_buyUI_text = 'Meat Cutter'
     elif FoodFactory_Stage == 5:
         # Sets the bought building to be drawn
         Factory_Sprites_Render[FoodFactory_MeatCutter] = True
+        FoodFactory_Producers[FoodFactory_MeatCutter] = True
         Factory_Sprites_Render[FoodFactory_buyUI] = False
 
 # Makes the tradeUI render when opened
@@ -724,6 +728,21 @@ def woodfactory_resource_produce():
                 resources['Wood_Beam'] -= 1
                 resources['Wood_Plank'] += 4
 
+# Function that consumes and produces correct resources
+def foodfactory_resource_produce():
+    global resources
+    for producer in FoodFactory_Producers:
+        if FoodFactory_Producers[producer]: # If the producer is True, eg meant to produce material
+            if producer == FoodFactory_FlourMill and resources['Wheat'] > 2:
+                resources['Wheat'] -= 2
+                resources['Flour'] += 6
+            elif producer == FoodFactory_BreadOven and resources['Flour'] > 5:
+                resources['Flour'] -= 5
+                resources['Bread'] += 2
+            elif producer == FoodFactory_MeatCutter and resources['Pig'] > 1:
+                resources['Pig'] -= 1
+                resources['Pork'] += 5
+
 # Schedules the resource_buy function to be called every second
 clock.schedule_interval(resource_buy_per_second, 1)
 
@@ -732,6 +751,9 @@ clock.schedule_interval(metalfactory_resource_produce, 1)
 
 # Schedules the woodfactory_resource_produce to be called every second
 clock.schedule_interval(woodfactory_resource_produce, 1)
+
+# Schedules the foodfactory_resource_produce to be called every second
+clock.schedule_interval(foodfactory_resource_produce, 1)
 
 # Runs the game
 pgzrun.go()
