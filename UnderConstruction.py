@@ -251,6 +251,43 @@ FoodFactory_MeatCutter.pos = (FoodFactory.x + 150, FoodFactory.y - 550)
 
 FoodFactory_buyUI_text = 'Food Factory'
 
+# AdvancedFactory specific sprites
+AdvancedFactory = Actor('advanced_factory')
+AdvancedFactory.pos = (WIDTH//2 + 100, HEIGHT//2 - 875)
+
+AdvancedFactory_UpWall = Actor('advanced_factory_horizontal_wall_without_door')
+AdvancedFactory_UpWall.pos = (AdvancedFactory.x, AdvancedFactory.y - 212.5)
+
+AdvancedFactory_DownWall = Actor('advanced_factory_horizontal_wall_with_door')
+AdvancedFactory_DownWall.pos = (AdvancedFactory.x, AdvancedFactory.y + 212.5)
+
+AdvancedFactory_LeftWall = Actor('advanced_factory_vertical_wall')
+AdvancedFactory_LeftWall.pos = (AdvancedFactory.x - 1012.5, AdvancedFactory.y)
+
+AdvancedFactory_RightWall = Actor('advanced_factory_vertical_wall')
+AdvancedFactory_RightWall.pos = (AdvancedFactory.x + 1012.5, AdvancedFactory.y)
+
+AdvancedFactory_Conveyor = Actor('straight_conveyor')
+AdvancedFactory_Conveyor.pos = (WIDTH//2 + 512.5, HEIGHT//2 - 500)
+AdvancedFactory_Conveyor.angle = -90
+
+AdvancedFactory_buyUI = Actor('buyui')
+AdvancedFactory_buyUI.pos = (AdvancedFactory.x, AdvancedFactory.y)
+
+AdvancedFactory_buyUI_buybtn = Actor('buyui_buybtn')
+AdvancedFactory_buyUI_buybtn.pos = (AdvancedFactory_buyUI.x, AdvancedFactory_buyUI.y + 118.75)
+
+AdvancedFactory_RoofTileMaker = Actor('roof_tile_maker')
+AdvancedFactory_RoofTileMaker.pos = (AdvancedFactory.x + 895, AdvancedFactory.y)
+
+AdvancedFactory_WireMaker = Actor('wire_maker')
+AdvancedFactory_WireMaker.pos = (AdvancedFactory.x - 475, AdvancedFactory.y - 87.5)
+
+AdvancedFactory_ConcreteMixer = Actor('concrete_mixer')
+AdvancedFactory_ConcreteMixer.pos = (AdvancedFactory.x + 400, AdvancedFactory.y - 95)
+
+AdvancedFactory_buyUI_text = 'Advanced Factory'
+
 # Dictionary for seeing if a building should produce materials or not
 MetalFactory_Producers = {MetalFactory_IronSmelter:False, MetalFactory_CopperSmelter:False, MetalFactory_SteelSmelter:False, MetalFactory_BrickFurnace:False}
 WoodFactory_Producers = {WoodFactory_BeamSaw:False, WoodFactory_PlankSaw:False}
@@ -268,6 +305,10 @@ WoodFactory_Stage = 0
 # Stage 0 = Nothing built, Stage 1 = FoodFactory, Stage 2 = Conveyor, Stage 3 = Flour Mill, Stage 4 = Bread Oven, Stage 5 = Meat Cutter
 FoodFactory_Stage = 0
 
+# Int for setting the AdvancedFactory_buyUI to correct state
+# Stage 0 = Nothing built, Stage 1 = AdvancedFactory, Stage 2 = Conveyor, Stage 3 = Roof Tile Maker, Stage 4 = Wire Maker, Stage 5 = Concrete Mixer
+AdvancedFactory_Stage = 0
+
 # List of sprites in factory map to make it easier to move around
 Factory_Sprites = [Factory, TradingPC, CollisionMapUp, CollisionMapDown, CollisionMapLeft, CollisionMapRight, 
                    MetalFactory, MetalFactory_UpWall, MetalFactory_DownWall, MetalFactory_LeftWall, MetalFactory_RightWall, MetalFactory_buyUI, MetalFactory_buyUI_buybtn, MetalFactory_Conveyor,
@@ -275,7 +316,9 @@ Factory_Sprites = [Factory, TradingPC, CollisionMapUp, CollisionMapDown, Collisi
                    WoodFactory, WoodFactory_UpWall, WoodFactory_DownWall, WoodFactory_LeftWall, WoodFactory_RightWall, WoodFactory_buyUI, WoodFactory_buyUI_buybtn, WoodFactory_Conveyor,
                    WoodFactory_BeamSaw, WoodFactory_PlankSaw,
                    FoodFactory, FoodFactory_DownWall, FoodFactory_LeftWall, FoodFactory_RightWall, FoodFactory_buyUI, FoodFactory_buyUI_buybtn, FoodFactory_Conveyor,
-                   FoodFactory_FlourMill, FoodFactory_BreadOven, FoodFactory_MeatCutter]
+                   FoodFactory_FlourMill, FoodFactory_BreadOven, FoodFactory_MeatCutter,
+                   AdvancedFactory, AdvancedFactory_UpWall, AdvancedFactory_DownWall, AdvancedFactory_LeftWall, AdvancedFactory_RightWall, AdvancedFactory_buyUI, AdvancedFactory_buyUI_buybtn, AdvancedFactory_Conveyor,
+                   AdvancedFactory_RoofTileMaker, AdvancedFactory_WireMaker, AdvancedFactory_ConcreteMixer]
 # List of sprites in factory map that should be rendered and bool for if they should be rendered or not, sets them in order so things go above or below the player sprite as they should
 Factory_Sprites_Render = {Factory:True, TradingPC:True, MetalFactory:False, MetalFactory_UpWall:False, MetalFactory_DownWall:False, MetalFactory_LeftWall:False, 
                           MetalFactory_RightWall:False, MetalFactory_buyUI:True, MetalFactory_IronSmelter:False, MetalFactory_CopperSmelter:False, MetalFactory_SteelSmelter:False, 
@@ -284,7 +327,9 @@ Factory_Sprites_Render = {Factory:True, TradingPC:True, MetalFactory:False, Meta
                           WoodFactory_BeamSaw:False, WoodFactory_PlankSaw:False,
                           FoodFactory:False, FoodFactory_DownWall:False, FoodFactory_LeftWall:False, FoodFactory_RightWall:False, FoodFactory_buyUI:True,
                           FoodFactory_FlourMill:False, FoodFactory_BreadOven:False, FoodFactory_MeatCutter:False,
-                          Player:True, MetalFactory_Conveyor:False, WoodFactory_Conveyor:False, FoodFactory_Conveyor:False}
+                          AdvancedFactory:False, AdvancedFactory_UpWall:False, AdvancedFactory_DownWall:False, AdvancedFactory_LeftWall:False, AdvancedFactory_RightWall:False, AdvancedFactory_buyUI:True,
+                          AdvancedFactory_RoofTileMaker:False, AdvancedFactory_WireMaker:False, AdvancedFactory_ConcreteMixer:False,
+                          Player:True, MetalFactory_Conveyor:False, WoodFactory_Conveyor:False, FoodFactory_Conveyor:False, AdvancedFactory_Conveyor:False}
 
 # City Sprites
 City = Actor('city')
@@ -319,6 +364,13 @@ def draw():
                 #screen.draw.text() # Third row resource
                 #screen.draw.text() # Fourth row resource
                 screen.draw.text('Buy', center=(FoodFactory_buyUI_buybtn.x, FoodFactory_buyUI_buybtn.y), fontsize=40) # Buy button
+            if sprite == AdvancedFactory_buyUI and Factory_Sprites_Render[AdvancedFactory_buyUI]:
+                screen.draw.text(AdvancedFactory_buyUI_text, center=(AdvancedFactory_buyUI_buybtn.x, AdvancedFactory_buyUI_buybtn.y - 237.5), fontsize=40)
+                #screen.draw.text() # First row resource
+                #screen.draw.text() # Second row resource
+                #screen.draw.text() # Third row resource
+                #screen.draw.text() # Fourth row resource
+                screen.draw.text('Buy', center=(AdvancedFactory_buyUI_buybtn.x, AdvancedFactory_buyUI_buybtn.y), fontsize=40) # Buy button
     else:
         # Draw city area
         City.draw()
@@ -475,6 +527,8 @@ def on_mouse_down(pos):
         WoodFactory_build()
     elif FoodFactory_Stage < 5 and FoodFactory_buyUI_buybtn.collidepoint(pos):
         FoodFactory_build()
+    elif AdvancedFactory_Stage < 5 and AdvancedFactory_buyUI_buybtn.collidepoint(pos):
+        AdvancedFactory_build()
     # If pressed on TradingPC sprite then call the function to open tradeUI
     if TradingPC.collidepoint(pos):
         tradeui_open()
@@ -597,6 +651,32 @@ def FoodFactory_build():
         Factory_Sprites_Render[FoodFactory_MeatCutter] = True
         FoodFactory_Producers[FoodFactory_MeatCutter] = True
         Factory_Sprites_Render[FoodFactory_buyUI] = False
+
+def AdvancedFactory_build():
+    global AdvancedFactory_Stage
+    global AdvancedFactory_buyUI_text
+    AdvancedFactory_Stage += 1
+    if AdvancedFactory_Stage == 1:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[AdvancedFactory] = True
+        Factory_Sprites_Render[AdvancedFactory_UpWall] = True
+        Factory_Sprites_Render[AdvancedFactory_DownWall] = True
+        Factory_Sprites_Render[AdvancedFactory_LeftWall] = True
+        Factory_Sprites_Render[AdvancedFactory_RightWall] = True
+        AdvancedFactory_buyUI_text = 'Conveyor'
+    elif AdvancedFactory_Stage == 2:
+        # Sets the bought building to be drawn
+        Factory_Sprites_Render[AdvancedFactory_Conveyor] = True
+        AdvancedFactory_buyUI_text = 'Roof Tile Maker'
+    elif AdvancedFactory_Stage == 3:
+        Factory_Sprites_Render[AdvancedFactory_RoofTileMaker] = True
+        AdvancedFactory_buyUI_text = 'Wire Maker'
+    elif AdvancedFactory_Stage == 4:
+        Factory_Sprites_Render[AdvancedFactory_WireMaker] = True
+        AdvancedFactory_buyUI_text = 'Concrete Mixer'
+    elif AdvancedFactory_Stage == 5:
+        Factory_Sprites_Render[AdvancedFactory_ConcreteMixer] = True
+        Factory_Sprites_Render[AdvancedFactory_buyUI] = False
 
 # Makes the tradeUI render when opened
 def tradeui_open():

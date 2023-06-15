@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500"
+   height="175"
+   viewBox="0 0 132.29166 46.302083"
+   version="1.1"
+   id="svg865"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="concrete_mixer.svg"
+   inkscape:export-filename="concrete_mixer.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview867"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="2.5247521"
+     inkscape:cx="200.61375"
+     inkscape:cy="98.227464"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs862" />
+  <g
+     inkscape:label="Lager 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#1a1a1a;stroke-width:0.371988"
+       id="rect1121"
+       width="26.458332"
+       height="13.229166"
+       x="0"
+       y="17.197916" />
+    <rect
+       style="fill:#1a1a1a;stroke-width:0.371988"
+       id="rect1121-5"
+       width="26.458332"
+       height="13.229166"
+       x="105.83333"
+       y="17.197916" />
+    <ellipse
+       style="fill:#000000;stroke-width:0.502234"
+       id="path1043-8"
+       cx="66.145828"
+       cy="23.151041"
+       rx="52.916664"
+       ry="19.84375" />
+  </g>
+</svg>
