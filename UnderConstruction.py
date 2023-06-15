@@ -686,16 +686,17 @@ def resource_buy_per_second():
     global resources
     global money
     for resource in buy_amount_per_second:
-        # If buy amount for given resource is set to per second and is a number and the tradeUI is closed
-        if buy_amount_per_second[resource] and buy_amount[resource].isdigit():
-            # If you dont have enough money to buy resources, set buy amount to 0 
-            if money < int(buy_amount[resource]) * int(resources_price[resource]):
-                buy_amount[resource] = 'Click to edit'
+        if not changing_buy_amount:
+            # If buy amount for given resource is set to per second and is a number and the tradeUI is closed
+            if buy_amount_per_second[resource] and buy_amount[resource].isdigit():
+                # If you dont have enough money to buy resources, set buy amount to 0 
+                if money < int(buy_amount[resource]) * int(resources_price[resource]):
+                    buy_amount[resource] = 'Click to edit'
+                else:
+                    resources[resource] += int(buy_amount[resource])
+                    money -= int(buy_amount[resource]) * resources_price[resource]
             else:
-                resources[resource] += int(buy_amount[resource])
-                money -= int(buy_amount[resource]) * resources_price[resource]
-        else:
-            buy_amount[resource] = 'Click to edit'
+                buy_amount[resource] = 'Click to edit'
 
 # Function that consumes and produces correct resources
 def metalfactory_resource_produce():
